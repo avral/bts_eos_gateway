@@ -47,7 +47,6 @@ logger.info(f'ISSUER_NAME: {ISSUER_NAME}')
 logger.info(f'ISSUE_ASSET: {ISSUE_ASSET}')
 
 
-# for op in Blockchain().stream(['transfer'], start=18655509):
 for op in Blockchain().stream(['transfer']):
     amount = float(op['amount']['amount']) / 100000
 

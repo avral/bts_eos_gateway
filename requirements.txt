@@ -1,2 +1,2 @@
 bitshares
-eosiopy
+git+https://github.com/eosmoto/eosiopy
