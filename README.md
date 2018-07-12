@@ -1,5 +1,14 @@
 # bts_eos_gateway
 
+
+## Run gateway
+migrate database
+`docker-compose run --rm base python manage.py migrate`
+`docker-compose run --rm base python manage.py createcachetable'
+
+create superuser for admin panel
+`docker-compose run --rm base python manage.py createsuperuser`
+
 ## build docker image
 `docker build -t bts_eos_gateway .`
 

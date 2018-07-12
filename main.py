@@ -1,3 +1,15 @@
+import os
+import logging
+from decimal import Decimal
+
+from django.core.management.base import BaseCommand
+from django.core.cache import cache
+from bitshares import BitShares
+from bitshares.blockchain import Blockchain
+from bitshares.memo import Memo
+from bitshares.instance import set_shared_blockchain_instance
+from raven.contrib.django.raven_compat.models import client
+
 # TODO Сентри
 
 # FIXME
@@ -10,6 +22,15 @@ bitshares = BitShares(node=NODE_URL, keys=[GATEWAY_ACCOUNT_WIF])
 set_shared_blockchain_instance(bitshares)
 
 m = Memo()
+
+logging.basicConfig(
+    level=logging.WARN,
+    format="%(asctime)s [%(threadName)s] [%(levelname)s]  %(message)s",
+    handlers=[
+        # logging.FileHandler("{0}/{1}.log".format(logPath, fileName)),
+        logging.StreamHandler()
+    ])
+
 
 
 logger.info(f'Gateway running..')

@@ -4,6 +4,8 @@ ADD requirements.txt /app/
 WORKDIR /app
 RUN pip install -r requirements.txt
 
+EXPOSE 8000
+
 ADD . /app
 
-CMD ["python", "main.py" ]
+# ENTRYPOINT entrypoint.py

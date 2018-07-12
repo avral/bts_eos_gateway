@@ -1,4 +1,4 @@
-bitshares==0.1.17
 git+https://github.com/eosmoto/eosiopy
+git+https://github.com/bitshares/python-bitshares
 Django==2.0.7
 raven==6.9.0
