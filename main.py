@@ -1,27 +1,3 @@
-import os
-import logging
-
-from bitshares import BitShares
-from bitshares.blockchain import Blockchain
-from bitshares.memo import Memo
-from bitshares.instance import set_shared_blockchain_instance
-
-from eos import (
-    eos_issue, eosio_config, ISSUE_ASSET, ISSUER_NAME, ISSUER_WIF
-)
-
-logging.basicConfig(
-    level=logging.WARN,
-    format="%(asctime)s [%(threadName)s] [%(levelname)s]  %(message)s",
-    handlers=[
-        # logging.FileHandler("{0}/{1}.log".format(logPath, fileName)),
-        logging.StreamHandler()
-    ])
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-
-
 # TODO Сентри
 
 # FIXME

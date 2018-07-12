@@ -8,7 +8,7 @@ from eosiopy.rawinputparams import RawinputParams
 
 
 ISSUER_WIF = os.getenv('ISSUER_WIF', '5KPk8R4KMNzLQr3rxKqRYRnG5RB7d9X7o5sPc1r8mTuo5uTPwcn')
-ISSUER_NAME = os.getenv('ISSUER_NAME', '5K463ynhZoCDDa4RDcr63cUwWLTnKqmdcoTKTHBjqoKfv4u5V7p')
+ISSUER_NAME = os.getenv('ISSUER_NAME', 'tc.core')
 ISSUE_ASSET = os.getenv('ISSUE_ASSET', 'TT')
 
 logger = logging.getLogger(__name__)
@@ -19,14 +19,14 @@ eosio_config.url = os.getenv('EOS_NODE_URL', 'https://eost.travelchain.io')
 eosio_config.port = os.getenv('EOS_NODE_PORT', '443')
 
 
-def eos_issue(receiver, amount, memo=''):
-    quantity = f'{amount:.4f} {ISSUE_ASSET}'
+def eos_issue(transfer):
+    quantity = f'{transfer.amount:.4f} {ISSUE_ASSET}'
 
     raw = RawinputParams('transfer', {
             'from': ISSUER_NAME,
-            'memo': memo,
+            'memo': '',  # TODO Какое мемо ставить?
             'quantity': quantity,
-            'to': receiver
+            'to': transfer.eos_name
         }, 'eosio.token', f'{ISSUER_NAME}@active')
 
     eosiop_arams = EosioParams(raw.params_actions_list, ISSUER_WIF)
@@ -34,5 +34,12 @@ def eos_issue(receiver, amount, memo=''):
 
     if 'transaction_id' not in r:
         logging.error(f'Issuing eos tokens \n {r}')
+        transfer.sys_message = r
     else:
-        logger.info(f'Issued {quantity} for {receiver} -> {r["transaction_id"]}')
+        logger.info(
+            f'Issued {quantity} for '
+            f'{transfer.eos_name} -> {r["transaction_id"]}'
+        )
+
+        transfer.eos_hash = r['transaction_id']
+        transfer.tokens_emitted = True
