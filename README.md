@@ -3,16 +3,18 @@
 
 ## Run gateway
 migrate database
-`docker-compose run --rm base python manage.py migrate`
-`docker-compose run --rm base python manage.py createcachetable'
+```
+docker-compose run --rm base python manage.py migrate
+docker-compose run --rm base python manage.py createcachetable
+```
 
 create superuser for admin panel
 `docker-compose run --rm base python manage.py createsuperuser`
 
 ## build docker image
-`docker build -t bts_eos_gateway .`
+`docker-compose build`
 
-run gateway `docker run -it -e ISSUER_WIF="" -e ISSUER_NAME="" -e GATEWAY_ACCOUNT_WIF="" bts_eos_gateway`
+run gateway `docker-compose up`
 
 ## environments:
 
@@ -31,4 +33,5 @@ ISSUE_ASSET: TT
 BITSHARES_NODE_URL: wss://node.testnet.bitshares.eu
 GATEWAY_ACCOUNT: 1.2.3604 # Must be as ID
 GATEWAY_ACCOUNT_WIF: ..
+START_BLOCK: <default: current block>
 ```
