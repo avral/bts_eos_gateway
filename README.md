@@ -16,22 +16,22 @@ create superuser for admin panel
 
 run gateway `docker-compose up`
 
-## environments:
+## .env file:
 
 KEY: DEFAULT_VALUE
 
 ```
-# eos
-EOS_NODE_URL: https://eost.travelchain.io
-EOS_NODE_PORT: 443
+EOS_NODE_URL=https://eost.travelchain.io
+EOS_NODE_PORT=443
 
-ISSUER_WIF: 
-ISSUER_NAME: 
-ISSUE_ASSET: TT
+ISSUER_WIF=
+ISSUER_NAME=
+ISSUE_ASSET=
 
-# BitShares
-BITSHARES_NODE_URL: wss://node.testnet.bitshares.eu
-GATEWAY_ACCOUNT: 1.2.3604 # Must be as ID
-GATEWAY_ACCOUNT_WIF: ..
+BITSHARES_NODE_URL=wss://node.testnet.bitshares.eu
+GATEWAY_ACCOUNT=
+GATEWAY_ACCOUNT_WIF=
+
+DEBUG="false"
 START_BLOCK: <default: current block>
 ```

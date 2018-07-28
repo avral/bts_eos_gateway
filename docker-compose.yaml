@@ -1,22 +1,8 @@
 version: '2'
 services:
   base:
-    restart: unless-stopped
     build: .
-    environment:
-      EOS_NODE_URL:
-      EOS_NODE_PORT:
-
-      ISSUER_WIF:
-      ISSUER_NAME:
-      ISSUE_ASSET:
-
-      BITSHARES_NODE_URL:
-      GATEWAY_ACCOUNT:
-      GATEWAY_ACCOUNT_WIF:
-      START_BLOCK:
-
-      DEBUG: "false"
+    env_file: .env
     volumes:
       - ./data:/app/data/
 

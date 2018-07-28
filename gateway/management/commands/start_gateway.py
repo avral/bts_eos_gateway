@@ -29,8 +29,8 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 NODE_URL = os.getenv('BITSHARES_NODE_URL', 'wss://node.testnet.bitshares.eu')
-GATEWAY_ACCOUNT_ID = os.getenv('GATEWAY_ACCOUNT', '1.2.3604')
-GATEWAY_ACCOUNT_WIF = '5KiQYz2MBTWH676biQcVwx6zJ1J3cYb65bZThRBav1z7gU2MoMu'
+GATEWAY_ACCOUNT_ID = os.getenv('GATEWAY_ACCOUNT')
+GATEWAY_ACCOUNT_WIF = os.getenv('GATEWAY_ACCOUNT_WIF')
 START_BLOCK = os.getenv('START_BLOCK', cache.get('START_BLOCK'))
 
 if START_BLOCK:

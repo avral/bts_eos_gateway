@@ -1,5 +1,7 @@
 import os
 import logging
+import json
+import subprocess
 
 from eosiopy import eosio_config
 from eosiopy.eosioparams import EosioParams
@@ -22,15 +24,14 @@ eosio_config.port = os.getenv('EOS_NODE_PORT', '443')
 def eos_issue(transfer):
     quantity = f'{transfer.amount:.4f} {ISSUE_ASSET}'
 
-    raw = RawinputParams('transfer', {
-            'from': ISSUER_NAME,
-            'memo': '',  # TODO Какое мемо ставить?
-            'quantity': quantity,
-            'to': transfer.eos_name
-        }, 'eosio.token', f'{ISSUER_NAME}@active')
+    command = [
+        "node",
+        "gateway/transfer.js",
+        ISSUER_NAME, transfer.eos_name, quantity
+    ]
 
-    eosiop_arams = EosioParams(raw.params_actions_list, ISSUER_WIF)
-    r = NodeNetwork.push_transaction(eosiop_arams.trx_json)
+    r = subprocess.run(command, stdout=subprocess.PIPE).stdout
+    r = json.loads(r.decode('utf-8'))
 
     if 'transaction_id' not in r:
         logging.error(f'Issuing eos tokens \n {r}')
@@ -43,3 +44,29 @@ def eos_issue(transfer):
 
         transfer.eos_hash = r['transaction_id']
         transfer.tokens_emitted = True
+
+
+# def eos_issue(transfer):
+#     quantity = f'{transfer.amount:.4f} {ISSUE_ASSET}'
+# 
+#     raw = RawinputParams('transfer', {
+#             'from': ISSUER_NAME,
+#             'memo': '',  # TODO Какое мемо ставить?
+#             'quantity': quantity,
+#             'to': transfer.eos_name
+#         }, 'eosio.token', f'{ISSUER_NAME}@active')
+# 
+#     eosiop_arams = EosioParams(raw.params_actions_list, ISSUER_WIF)
+#     r = NodeNetwork.push_transaction(eosiop_arams.trx_json)
+# 
+#     if 'transaction_id' not in r:
+#         logging.error(f'Issuing eos tokens \n {r}')
+#         transfer.sys_message = r
+#     else:
+#         logger.info(
+#             f'Issued {quantity} for '
+#             f'{transfer.eos_name} -> {r["transaction_id"]}'
+#         )
+# 
+#         transfer.eos_hash = r['transaction_id']
+#         transfer.tokens_emitted = True
